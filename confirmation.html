@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Confirmation</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .confirmation__container {
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .confirmation__message {
+            background-color: #4CAF50;
+            color: #fff;
+            font-size: 24px;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+            opacity: 0;
+            /* Initially hidden for animation */
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        /* Animation */
+        .confirmation__message.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .confirmation__container {
+                padding: 20px;
+            }
+
+            .confirmation__message {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="confirmation__container">
+        <h2>Reservation Details</h2>
+        <div class="confirmation__details" id="confirmationDetails">
+            <!-- User details will be displayed here -->
+        </div>
+        <div class="confirmation__message" id="confirmationMessage">
+            <!-- Confirmation message will be displayed here -->
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="main.js"></script> <!-- Include your JavaScript file -->
+    <script>
+        // JavaScript for displaying confirmation message and animations
+        const confirmationDetails = document.getElementById("confirmationDetails");
+        const confirmationMessage = document.getElementById("confirmationMessage");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            displayConfirmationDetails();
+            animateConfirmationMessage();
+        });
+
+        function displayConfirmationDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const html = `
+                <p><strong>Name:</strong> ${params.get("name")}</p>
+                <p><strong>Email:</strong> ${params.get("email")}</p>
+                <p><strong>Date:</strong> ${params.get("date")}</p>
+                <p><strong>Time:</strong> ${params.get("time")}</p>
+                <p><strong>Number of People:</strong> ${params.get("people")}</p>
+            `;
+            confirmationDetails.innerHTML = html;
+        }
+
+        function animateConfirmationMessage() {
+            const message = "Your reservation is confirmed!";
+            confirmationMessage.textContent = message;
+
+            // Apply animations using ScrollReveal library
+            ScrollReveal().reveal(".confirmation__container", {
+                distance: "50px",
+                origin: "bottom",
+                duration: 1000,
+                delay: 500
+            });
+            ScrollReveal().reveal(".confirmation__message", {
+                distance: "50px",
+                origin: "bottom",
+                duration: 1000,
+                delay: 1000
+            });
+        }
+    </script>
+</body>
+
+</html>
